@@ -9,7 +9,10 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "ts-node-dev --respawn --transpile-only src/server/index.ts",
     "dev:client": "cd src/client && npm run dev",
-    "postinstall": "npm run build"
+    "install:all": "npm install && cd src/client && npm install",
+    "clean": "rm -rf dist node_modules src/client/node_modules",
+    "docker:build": "docker build -t city-empire-game .",
+    "docker:run": "docker run -p 3000:3000 city-empire-game"
   },
   "keywords": [
     "game",
@@ -26,13 +29,13 @@
     "cors": "^2.8.5",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
-    "typescript": "^5.2.2"
-  },
-  "devDependencies": {
+    "typescript": "^5.2.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20.8.10",
     "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.5",
+    "@types/jsonwebtoken": "^9.0.5"
+  },
+  "devDependencies": {
     "ts-node-dev": "^2.0.0",
     "concurrently": "^8.2.0"
   },
