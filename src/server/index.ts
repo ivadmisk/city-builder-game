@@ -5,11 +5,9 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
-import { config } from 'dotenv';
 
 // Загружаем переменные окружения
 dotenv.config();
-config();
 
 const app = express();
 const httpServer = createServer(app);
@@ -24,11 +22,11 @@ const io = new Server(httpServer, {
 app.use(cors());
 app.use(express.json());
 
-// Подключение к MongoDB Atlas
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://your-mongodb-uri';
+// Подключение к MongoDB
+const MONGODB_URI = process.env.MONGODB_URL || process.env.MONGODB_URI || 'mongodb://localhost:27017/city-empire';
 
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('✅ Подключено к MongoDB Atlas'))
+  .then(() => console.log('✅ Подключено к MongoDB'))
   .catch(err => console.error('❌ Ошибка подключения к MongoDB:', err));
 
 // Роуты
@@ -52,7 +50,7 @@ io.on('connection', (socket) => {
   // Здесь будет добавлена игровая логика
 });
 
-// Эндпоинт проверки здоровья для Render.com
+// Эндпоинт проверки здоровья
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
@@ -63,7 +61,7 @@ app.get('*', (req, res) => {
 });
 
 // Запуск сервера
-const PORT = process.env.PORT || 5000;
-httpServer.listen(PORT, () => {
+const PORT = process.env.PORT || 3000;
+httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
 }); 
