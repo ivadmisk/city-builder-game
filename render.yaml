@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: city-empire-game
+    env: node
+    plan: free
+    buildCommand: cd src/client && npm install && npm run build && cd ../.. && npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+    healthCheckPath: /health
+    autoDeploy: true
+    domains:
+      - city-empire-game.onrender.com 
